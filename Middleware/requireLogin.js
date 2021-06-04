@@ -4,7 +4,7 @@ const { JSON_SECRET } = require('../key')
 const User=mongoose.model('User')
 module.exports =(req,res,next)=>{
     const {authorization}=req.headers
-    //authorization=Bearer ksfgdfkshkfhskjdhfskjfhskjhfskjhfslk
+    
     if(!authorization){
         return res.status(422).json({error:"You must be logged in"})
     }
