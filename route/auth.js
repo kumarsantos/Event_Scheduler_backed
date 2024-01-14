@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = mongoose.model("User");
-const { JSON_SECRET } = require("../key");
 const requireLogin = require("../Middleware/requireLogin");
 
 router.post("/signup", (req, res) => {
@@ -31,7 +30,7 @@ router.post("/signup", (req, res) => {
       user
         .save()
         .then((user) => {
-          const token = jwt.sign({ _id: user._id }, JSON_SECRET);
+          const token = jwt.sign({ _id: user._id }, process.env.JSON_SECRET);
           const loggeduser = {
             _id: user._id,
             email: user.email,
@@ -56,7 +55,7 @@ router.post("/login", (req, res) => {
       }
       bcrypt.compare(password, user.password).then((doMatch) => {
         if (doMatch) {
-          const token = jwt.sign({ _id: user._id }, JSON_SECRET);
+          const token = jwt.sign({ _id: user._id }, process.env.JSON_SECRET);
           const loggeduser = {
             _id: user._id,
             email: user.email,
